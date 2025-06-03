@@ -201,7 +201,7 @@ body {
 
 /* === Continent Cultural Backgrounds === */
 #africa {
-  background-image: url('Images/africa-culture.jpg');
+  background-image: url('./Images/africa-culture.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -211,7 +211,7 @@ body {
 }
 
 #asia {
-  background-image: url('../images/asia-culture.jpg');
+  background-image: url('./Images/asia-culture.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -221,7 +221,7 @@ body {
 }
 
 #europe {
-  background-image: url('../images/europe-culture.jpg');
+  background-image: url('./Images/europe-culture.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -231,7 +231,7 @@ body {
 }
 
 #americas {
-  background-image: url('../images/americas-culture.jpg');
+  background-image: url('./Imagess/americas-culture.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -241,7 +241,7 @@ body {
 }
 
 #oceania {
-  background-image: url('../images/oceania-culture.jpg');
+  background-image: url('./Images/oceania-culture.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
