@@ -1,0 +1,251 @@
+/* Global Layout */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    color: #111;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  /* Header Section */
+  header {
+    background: linear-gradient(to right, #dff3ff, #ffffff);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  }
+  
+  header h1 {
+    color: #065a82;
+  }
+  
+  /* Buttons */
+  .btn {
+    border-radius: 0.6rem;
+    padding: 0.6rem 1.4rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #0066cc;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #004a99;
+    transform: scale(1.05);
+  }
+  
+  .btn-outline-primary {
+    border: 2px solid #0066cc;
+    color: #0066cc;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #0066cc;
+    color: white;
+  }
+  
+  /* Featured Cards */
+  .card {
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+  
+  /* Flag / Country Images */
+  img.flag, .card-img-top {
+    border-radius: 0.6rem;
+    max-height: 120px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+  
+  /* Section Titles */
+  section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #eef2f6;
+    color: #444;
+    text-align: center;
+    font-size: 0.95rem;
+    padding: 1rem;
+    border-top: 2px solid #d6dee8;
+  }
+  
+  /* Carousel Images */
+  .carousel-inner img {
+    height: 400px;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  .carousel-inner video {
+    height: 400px;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  /* Carousel Captions */
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
+    color: #fff;
+  }
+  
+  /* Quiz Buttons */
+  #options .btn {
+    margin-bottom: 10px;
+  }
+  
+  /* Compare Country Cards */
+  #compare-results .card {
+    text-align: left;
+  }
+  
+  /* Currency Converter */
+  #conversionResult {
+    font-size: 1.2rem;
+    color: #0b6c20;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    header h1 {
+      font-size: 2rem;
+    }
+  
+    .card {
+      text-align: center;
+    }
+  
+    .carousel-inner img,
+    .carousel-inner video {
+      height: auto;
+    }
+  
+    .btn {
+      width: 100%;
+    }
+  }
+  
+  /* Fullscreen animated video background */
+  #backgroundVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.3; /* adjust opacity to your preference */
+  }
+
+  /* Translucent content containers (optional) */
+    main, header, footer, section {
+      background-color: rgba(255, 255, 255, 0.85); /* translucent white */
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+  }
+
+  .navbar .nav-link {
+    color: #333;
+    transition: color 0.3s ease;
+  }
+
+  .navbar .nav-link:hover {
+    color: #007bff;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+
+/* === Continent Cultural Backgrounds === */
+#africa {
+  background-image: url('Images/africa-culture.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+#asia {
+  background-image: url('../images/asia-culture.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+#europe {
+  background-image: url('../images/europe-culture.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+#americas {
+  background-image: url('../images/americas-culture.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+#oceania {
+  background-image: url('../images/oceania-culture.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
