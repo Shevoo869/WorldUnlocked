@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Australia – World Unlocked</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body class="container mt-4">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4 rounded">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="Homepage.html">🌍 World Unlocked</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="continents.html">Continents</a></li>
+          <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+          <li class="nav-item"><a class="nav-link" href="Quiz.html">Quiz</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <header class="text-center mb-4">
+    <h1>Australia</h1>
+    <p class="lead">The Land Down Under</p>
+  </header>
+
+  <main>
+    <!-- FLAG -->
+    <section class="mb-5 text-center">
+      <img src="https://flagcdn.com/w320/au.png" alt="Australia Flag" class="img-fluid" style="max-width: 150px;">
+    </section>
+
+    <!-- Country Info Cards -->
+    <section class="row g-4">
+      <div class="col-md-6"><div class="card p-3"><h4>Capital</h4><p>Canberra</p></div></div>
+      <div class="col-md-6"><div class="card p-3"><h4>Language</h4><p>English</p></div></div>
+      <div class="col-md-6"><div class="card p-3"><h4>Currency</h4><p>Australian Dollar (AUD)</p></div></div>
+      <div class="col-md-6"><div class="card p-3"><h4>Fun Fact</h4><p>Australia has more kangaroos than people!</p></div></div>
+      <div class="col-12">
+        <div class="card p-3 shadow-sm">
+          <h4>Quick Description</h4>
+          <p>
+            Australia is known for its unique wildlife, vast outback, vibrant cities, and stunning coastal attractions like the Great Barrier Reef and Sydney Opera House.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carousel Section -->
+    <section class="mb-5">
+      <h4 class="text-center mb-3">Popular Destinations</h4>
+      <div id="carouselAustralia" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner rounded shadow-sm">
+
+          <div class="carousel-item active">
+            <img src="Images/Australia/SydneyOperaHouse.jpg" class="d-block w-100" alt="Sydney Opera House">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Sydney Opera House – Sydney</h5>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <img src="Images/Australia/GreatBarrierReef.jpg" class="d-block w-100" alt="Great Barrier Reef">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Great Barrier Reef – Queensland</h5>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <img src="Images/Australia/Uluru.jpg" class="d-block w-100" alt="Uluru">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Uluru (Ayers Rock) – Northern Territory</h5>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <img src="Images/Australia/BlueMountains.jpg" class="d-block w-100" alt="Blue Mountains">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Blue Mountains – New South Wales</h5>
+            </div>
+          </div>
+
+          <!-- Optional video -->
+          <div class="carousel-item">
+            <video class="d-block w-100" autoplay muted loop playsinline>
+              <source src="Images/Australia/AustraliaTour.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Explore Australia – Quick Glimpse</h5>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAustralia" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselAustralia" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </section>
+
+   
+    <!-- Featured Places with History and Info -->
+    <section class="mb-5">
+      <h4 class="text-center mb-4">Must-Visit Places & History</h4>
+      <div class="row g-4">
+
+        <!-- Port Arthur Historic Site -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Images/Australia/PortArthur.jpg" class="card-img-top" alt="Port Arthur">
+            <div class="card-body">
+              <h5 class="card-title">Port Arthur</h5>
+              <p class="card-text">Located in Tasmania, Port Arthur was a 19th-century penal settlement and is now one of Australia’s most significant heritage sites. It offers insight into the country’s convict past and colonial history.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kakadu National Park -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Images/Australia/Kakadu.jpg" class="card-img-top" alt="Kakadu National Park">
+            <div class="card-body">
+              <h5 class="card-title">Kakadu National Park</h5>
+              <p class="card-text">This UNESCO World Heritage Site is home to Aboriginal rock art over 20,000 years old, diverse wildlife, and dramatic landscapes. It’s a living cultural landscape cared for by its traditional owners, the Bininj/Mungguy people.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Twelve Apostles -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Images/Australia/TwelveApostles.jpg" class="card-img-top" alt="Twelve Apostles">
+            <div class="card-body">
+              <h5 class="card-title">The Twelve Apostles</h5>
+              <p class="card-text">Located along the Great Ocean Road in Victoria, these towering limestone stacks were formed by erosion over millions of years. They’re a geological marvel and one of Australia’s most photographed natural landmarks.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- Currency Converter -->
+    <section class="card p-3 mt-5 shadow-sm">
+      <h4>Currency Converter</h4>
+      <div class="row g-3">
+        <div class="col-md-3"><input type="number" id="amount" class="form-control" placeholder="Amount" value="50"></div>
+        <div class="col-md-3">
+          <select id="fromCurrency" class="form-select">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="AUD">AUD</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select id="toCurrency" class="form-select">
+            <option value="AUD">AUD</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary w-100" onclick="convertCurrency()">Convert</button>
+        </div>
+      </div>
+      <p class="mt-3 fw-bold" id="conversionResult"></p>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const carousel = document.querySelector('#carouselAustralia');
+    new bootstrap.Carousel(carousel, {
+      interval: 3000,
+      ride: 'carousel',
+      pause: false,
+      wrap: true
+    });
+  </script>
+
+  <script src="js/currency-conversion.js"></script>
+
+  <footer class="text-center mt-5 border-top pt-3">
+    <p>&copy; 2025 Patrick 11890214 | World Unlocked</p>
+  </footer>
+</body>
+</html>
