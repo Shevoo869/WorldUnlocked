@@ -15,6 +15,50 @@
       box-shadow: 0 0 8px rgba(0,0,0,0.15);
     }
 
+    /* Confetti Animation */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff6b6b;
+      animation: confetti-fall 3s ease-out forwards;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .review-question {
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #f8f9fa;
+    }
+
+    .review-img {
+      max-width: 150px;
+      border-radius: 0.5rem;
+    }
+
+    .correct-answer {
+      color: #198754;
+      font-weight: bold;
+    }
+
+    .incorrect-answer {
+      color: #dc3545;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -41,6 +85,11 @@
     <h1>World Quiz Challenge</h1>
     <p class="lead">Flags, Capitals, Landmarks & More!</p>
     <p><strong>Score: <span id="score">0</span></strong></p>
+    <!-- Test Mode Toggle -->
+    <div class="mb-3">
+      <button id="testModeBtn" class="btn btn-warning btn-sm" onclick="toggleTestMode()">🔧 Test Mode: OFF</button>
+      <small class="text-muted d-block">Test mode shows all possible questions for debugging</small>
+    </div>
   </header>
 
   <main id="quiz-section" class="text-center">
@@ -61,7 +110,30 @@
   <section class="text-center mt-5" id="end-screen" style="display: none;">
     <h2>Quiz Completed!</h2>
     <p class="lead">You scored <strong><span id="finalScore"></span></strong> out of <strong><span id="totalQuestions"></span></strong>.</p>
-    <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+    <p class="lead">That's <strong><span id="percentage"></span>%</strong>!</p>
+    <div class="mt-3">
+      <button class="btn btn-primary me-2" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="btn btn-secondary" onclick="showReview()">Review Answers</button>
+    </div>
+  </section>
+
+  <section class="mt-5" id="review-screen" style="display: none;">
+    <div class="text-center mb-4">
+      <h2>Quiz Review</h2>
+      <p class="lead">Here are all the questions and your answers:</p>
+      <button class="btn btn-primary me-2" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="btn btn-secondary" onclick="backToResults()">Back to Results</button>
+    </div>
+    <div id="review-content"></div>
+  </section>
+
+  <section class="mt-5" id="test-mode-screen" style="display: none;">
+    <div class="text-center mb-4">
+      <h2>🔧 Test Mode - All Possible Questions</h2>
+      <p class="lead">Check which images load properly and verify all question types</p>
+      <button class="btn btn-secondary" onclick="exitTestMode()">Exit Test Mode</button>
+    </div>
+    <div id="test-content"></div>
   </section>
 
   <footer class="text-center mt-5 border-top pt-3">
@@ -76,7 +148,8 @@
       capital: "Tokyo",
       currency: "Yen (¥)",
       funfact: "Has more pets than children",
-      cities: ["Tokyo", "Osaka", "Kyoto"]
+      cities: ["Tokyo", "Osaka", "Kyoto"],
+      folder: "Japan"
     },
     {
       name: "France",
@@ -84,7 +157,8 @@
       capital: "Paris",
       currency: "Euro (€)",
       funfact: "Is the most visited country in the world",
-      cities: ["Paris", "Lyon", "Marseille"]
+      cities: ["Paris", "Lyon", "Marseille"],
+      folder: "France"
     },
     {
       name: "USA",
@@ -92,15 +166,17 @@
       capital: "Washington, D.C.",
       currency: "US Dollar ($)",
       funfact: "Has no official national language",
-      cities: ["New York", "Chicago", "Los Angeles"]
+      cities: ["New York", "Chicago", "Los Angeles"],
+      folder: "USA"
     },
     {
       name: "Brazil",
       flag: "https://flagcdn.com/w320/br.png",
       capital: "Brasília",
       currency: "Brazilian Real (R$)",
-      funfact: "Hosts the world’s largest carnival in Rio",
-      cities: ["Rio de Janeiro", "São Paulo", "Brasília"]
+      funfact: "Hosts the world's largest carnival in Rio",
+      cities: ["Rio de Janeiro", "São Paulo", "Brasília"],
+      folder: "Brazil"
     },
     {
       name: "Australia",
@@ -108,22 +184,53 @@
       capital: "Canberra",
       currency: "Australian Dollar (AUD)",
       funfact: "Has more kangaroos than people",
-      cities: ["Sydney", "Melbourne", "Canberra"]
+      cities: ["Sydney", "Melbourne", "Canberra"],
+      folder: "Australia"
+    },
+    {
+      name: "New Zealand",
+      flag: "https://flagcdn.com/w320/nz.png",
+      capital: "Wellington",
+      currency: "New Zealand Dollar (NZD)",
+      funfact: "Has more sheep than people",
+      cities: ["Auckland", "Wellington", "Christchurch"],
+      folder: "NewZealand"
+    },
+    {
+      name: "South Africa",
+      flag: "https://flagcdn.com/w320/za.png",
+      capital: "Cape Town",
+      currency: "South African Rand (ZAR)",
+      funfact: "Has 11 official languages",
+      cities: ["Cape Town", "Johannesburg", "Durban"],
+      folder: "SouthAfrica"
     }
   ];
 
+    // Define common landmark/image names that might be in your folders
+    const commonImageNames = [
+      "MtFuji", "EiffelTower", "StatueofLiberty", "ChristtheRedeemer", "Uluru",
+      "SkyTower", "TableMountain", "landmark1", "landmark2", "landmark3", "image1", "image2"
+    ];
+
+    // This will attempt to use images from your folder structure
+    // You can modify the image names in commonImageNames array above to match your actual files
     const landmarks = [
       { country: "Japan", name: "Mount Fuji", img: "Images/Japan/MtFuji.jpg" },
       { country: "France", name: "Eiffel Tower", img: "Images/France/EiffelTower.jpg" },
       { country: "USA", name: "Statue of Liberty", img: "Images/USA/StatueofLiberty.jpg" },
       { country: "Brazil", name: "Christ the Redeemer", img: "Images/Brazil/ChristtheRedeemer.jpg" },
-      { country: "Australia", name: "Uluru", img: "Images/Australia/Uluru.jpg" }
+      { country: "Australia", name: "Uluru", img: "Images/Australia/Uluru.jpg" },
+      { country: "New Zealand", name: "Sky Tower", img: "Images/NewZealand/SkyTower.jpg" },
+      { country: "South Africa", name: "Table Mountain", img: "Images/SouthAfrica/TableMountain.jpg" }
     ];
 
     const questionTypes = ["flag", "capital", "currency", "funfact", "landmarkCountry", "landmarkName"];
     let questions = [];
+    let userAnswers = []; // Track user answers for review
     let score = 0;
     let current = 0;
+    let testMode = false;
 
     function getRandomOptions(correct, allOptions) {
       const options = new Set([correct]);
@@ -131,6 +238,25 @@
         const rand = allOptions[Math.floor(Math.random() * allOptions.length)];
         options.add(rand);
       }
+      return [...options].sort(() => Math.random() - 0.5);
+    }
+
+    function getCapitalOptions(country) {
+      // Start with the correct capital
+      const options = new Set([country.capital]);
+      
+      // Add other cities from the same country (excluding the capital if it's already in the cities array)
+      const otherCities = country.cities.filter(city => city !== country.capital);
+      otherCities.forEach(city => options.add(city));
+      
+      // If we still need more options, add capitals from other countries
+      while (options.size < 4) {
+        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+        if (randomCountry.name !== country.name) {
+          options.add(randomCountry.capital);
+        }
+      }
+      
       return [...options].sort(() => Math.random() - 0.5);
     }
 
@@ -161,7 +287,7 @@
           } else if (type === "capital") {
             questionText = `What is the capital of ${country.name}?`;
             correct = country.capital;
-            options = getRandomOptions(correct, countries.map(c => c.capital));
+            options = getCapitalOptions(country); // Use the new function for capital questions
           } else if (type === "currency") {
             questionText = `What is the currency of ${country.name}?`;
             correct = country.currency;
@@ -203,10 +329,19 @@
 
     function loadNext() {
       if (current >= questions.length) {
+        const percentage = Math.round((score / questions.length) * 100);
+        
         document.getElementById("quiz-section").style.display = "none";
         document.getElementById("end-screen").style.display = "block";
         document.getElementById("finalScore").innerText = score;
         document.getElementById("totalQuestions").innerText = questions.length;
+        document.getElementById("percentage").innerText = percentage;
+        
+        // Show confetti if score is above 80%
+        if (percentage >= 80) {
+          createConfetti();
+        }
+        
         return;
       }
 
@@ -234,7 +369,17 @@
 
     function checkAnswer(btn) {
       const q = questions[current];
-      const isCorrect = btn.innerText === q.correct;
+      const userAnswer = btn.innerText;
+      const isCorrect = userAnswer === q.correct;
+
+      // Store the user's answer for review
+      userAnswers[current] = {
+        question: q.questionText,
+        userAnswer: userAnswer,
+        correctAnswer: q.correct,
+        isCorrect: isCorrect,
+        img: q.img
+      };
 
       if (isCorrect) {
         btn.classList.remove("btn-outline-primary");
@@ -255,11 +400,198 @@
     function restartQuiz() {
       score = 0;
       current = 0;
+      userAnswers = [];
       questions = generateQuestions(10); // Adjust total questions here
       document.getElementById("score").innerText = "0";
       document.getElementById("quiz-section").style.display = "block";
       document.getElementById("end-screen").style.display = "none";
+      document.getElementById("review-screen").style.display = "none";
       loadNext();
+    }
+
+    function createConfetti() {
+      const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8'];
+      
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDelay = Math.random() * 2 + 's';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => {
+            confetti.remove();
+          }, 4000);
+        }, i * 50);
+      }
+    }
+
+    function showReview() {
+      document.getElementById("end-screen").style.display = "none";
+      document.getElementById("review-screen").style.display = "block";
+      
+      const reviewContent = document.getElementById("review-content");
+      reviewContent.innerHTML = "";
+      
+      userAnswers.forEach((answer, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'review-question';
+        
+        const statusIcon = answer.isCorrect ? '✅' : '❌';
+        const statusClass = answer.isCorrect ? 'correct-answer' : 'incorrect-answer';
+        
+        questionDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-2 text-center">
+              <h5>${statusIcon}</h5>
+              <small>Question ${index + 1}</small>
+            </div>
+            <div class="col-md-6">
+              <h6>${answer.question}</h6>
+              ${answer.img ? `<img src="${answer.img}" class="review-img mb-2" alt="Question image">` : ''}
+              <p class="mb-1"><strong>Your Answer:</strong> <span class="${statusClass}">${answer.userAnswer}</span></p>
+              ${!answer.isCorrect ? `<p class="mb-0"><strong>Correct Answer:</strong> <span class="correct-answer">${answer.correctAnswer}</span></p>` : ''}
+            </div>
+          </div>
+        `;
+        
+        reviewContent.appendChild(questionDiv);
+      });
+    }
+
+    function backToResults() {
+      document.getElementById("review-screen").style.display = "none";
+      document.getElementById("end-screen").style.display = "block";
+    }
+
+    function toggleTestMode() {
+      testMode = !testMode;
+      const btn = document.getElementById("testModeBtn");
+      
+      if (testMode) {
+        btn.innerText = "🔧 Test Mode: ON";
+        btn.classList.remove("btn-warning");
+        btn.classList.add("btn-success");
+        showAllQuestions();
+      } else {
+        btn.innerText = "🔧 Test Mode: OFF";
+        btn.classList.remove("btn-success");
+        btn.classList.add("btn-warning");
+        exitTestMode();
+      }
+    }
+
+    function showAllQuestions() {
+      document.getElementById("quiz-section").style.display = "none";
+      document.getElementById("end-screen").style.display = "none";
+      document.getElementById("review-screen").style.display = "none";
+      document.getElementById("test-mode-screen").style.display = "block";
+      
+      const testContent = document.getElementById("test-content");
+      testContent.innerHTML = "";
+      
+      let allQuestions = [];
+      
+      // Generate all possible question types for each country
+      countries.forEach(country => {
+        // Flag question
+        allQuestions.push({
+          type: "flag",
+          questionText: "Which country does this flag belong to?",
+          correct: country.name,
+          img: country.flag,
+          country: country.name
+        });
+        
+        // Capital question
+        allQuestions.push({
+          type: "capital",
+          questionText: `What is the capital of ${country.name}?`,
+          correct: country.capital,
+          img: "",
+          country: country.name
+        });
+        
+        // Currency question
+        allQuestions.push({
+          type: "currency",
+          questionText: `What is the currency of ${country.name}?`,
+          correct: country.currency,
+          img: "",
+          country: country.name
+        });
+        
+        // Fun fact question
+        allQuestions.push({
+          type: "funfact",
+          questionText: `Which country: ${country.funfact}?`,
+          correct: country.name,
+          img: "",
+          country: country.name
+        });
+      });
+      
+      // Add landmark questions
+      landmarks.forEach(landmark => {
+        // Landmark country question
+        allQuestions.push({
+          type: "landmarkCountry",
+          questionText: "Which country is this famous landmark in?",
+          correct: landmark.country,
+          img: landmark.img,
+          landmark: landmark.name
+        });
+        
+        // Landmark name question
+        allQuestions.push({
+          type: "landmarkName",
+          questionText: "What is the name of this landmark?",
+          correct: landmark.name,
+          img: landmark.img,
+          landmark: landmark.name
+        });
+      });
+      
+      // Display all questions
+      allQuestions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'review-question';
+        
+        const imageStatus = q.img ? 
+          `<img src="${q.img}" class="review-img mb-2" alt="Test image" onerror="this.style.border='3px solid red'; this.alt='❌ IMAGE FAILED TO LOAD';" onload="this.style.border='3px solid green';">
+           <br><small class="text-muted">Image path: ${q.img}</small>` 
+          : '<small class="text-muted">No image for this question</small>';
+        
+        questionDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-2 text-center">
+              <h6>${q.type.toUpperCase()}</h6>
+              <small>Question ${index + 1}</small>
+            </div>
+            <div class="col-md-10">
+              <h6>${q.questionText}</h6>
+              ${imageStatus}
+              <p class="mt-2"><strong>Correct Answer:</strong> <span class="correct-answer">${q.correct}</span></p>
+              ${q.country ? `<small class="text-muted">Country: ${q.country}</small>` : ''}
+              ${q.landmark ? `<small class="text-muted">Landmark: ${q.landmark}</small>` : ''}
+            </div>
+          </div>
+        `;
+        
+        testContent.appendChild(questionDiv);
+      });
+    }
+
+    function exitTestMode() {
+      testMode = false;
+      document.getElementById("testModeBtn").innerText = "🔧 Test Mode: OFF";
+      document.getElementById("testModeBtn").classList.remove("btn-success");
+      document.getElementById("testModeBtn").classList.add("btn-warning");
+      document.getElementById("test-mode-screen").style.display = "none";
+      document.getElementById("quiz-section").style.display = "block";
     }
 
     window.onload = restartQuiz;
