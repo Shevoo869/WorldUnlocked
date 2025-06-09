@@ -85,11 +85,6 @@
     <h1>World Quiz Challenge</h1>
     <p class="lead">Flags, Capitals, Landmarks & More!</p>
     <p><strong>Score: <span id="score">0</span></strong></p>
-    <!-- Test Mode Toggle -->
-    <div class="mb-3">
-      <button id="testModeBtn" class="btn btn-warning btn-sm" onclick="toggleTestMode()">🔧 Test Mode: OFF</button>
-      <small class="text-muted d-block">Test mode shows all possible questions for debugging</small>
-    </div>
   </header>
 
   <main id="quiz-section" class="text-center">
@@ -125,15 +120,6 @@
       <button class="btn btn-secondary" onclick="backToResults()">Back to Results</button>
     </div>
     <div id="review-content"></div>
-  </section>
-
-  <section class="mt-5" id="test-mode-screen" style="display: none;">
-    <div class="text-center mb-4">
-      <h2>🔧 Test Mode - All Possible Questions</h2>
-      <p class="lead">Check which images load properly and verify all question types</p>
-      <button class="btn btn-secondary" onclick="exitTestMode()">Exit Test Mode</button>
-    </div>
-    <div id="test-content"></div>
   </section>
 
   <footer class="text-center mt-5 border-top pt-3">
@@ -207,21 +193,14 @@
     }
   ];
 
-    // Define common landmark/image names that might be in your folders
-    const commonImageNames = [
-      "MtFuji", "EiffelTower", "StatueofLiberty", "ChristtheRedeemer", "Uluru",
-      "SkyTower", "TableMountain", "landmark1", "landmark2", "landmark3", "image1", "image2"
-    ];
-
-    // This will attempt to use images from your folder structure
-    // You can modify the image names in commonImageNames array above to match your actual files
+    // Landmarks array - make sure these match your actual image files
     const landmarks = [
       { country: "Japan", name: "Mount Fuji", img: "Images/Japan/MtFuji.jpg" },
       { country: "France", name: "Eiffel Tower", img: "Images/France/EiffelTower.jpg" },
       { country: "USA", name: "Statue of Liberty", img: "Images/USA/StatueofLiberty.jpg" },
       { country: "Brazil", name: "Christ the Redeemer", img: "Images/Brazil/ChristtheRedeemer.jpg" },
       { country: "Australia", name: "Uluru", img: "Images/Australia/Uluru.jpg" },
-      { country: "New Zealand", name: "Sky Tower", img: "Images/NewZealand/SkyTower.jpg" },
+      { country: "New Zealand", name: "Hobbiton", img: "Images/NewZealand/Hobbiton.jpg" },
       { country: "South Africa", name: "Table Mountain", img: "Images/SouthAfrica/TableMountain.jpg" }
     ];
 
@@ -230,7 +209,6 @@
     let userAnswers = []; // Track user answers for review
     let score = 0;
     let current = 0;
-    let testMode = false;
 
     function getRandomOptions(correct, allOptions) {
       const options = new Set([correct]);
@@ -287,7 +265,7 @@
           } else if (type === "capital") {
             questionText = `What is the capital of ${country.name}?`;
             correct = country.capital;
-            options = getCapitalOptions(country); // Use the new function for capital questions
+            options = getCapitalOptions(country);
           } else if (type === "currency") {
             questionText = `What is the currency of ${country.name}?`;
             correct = country.currency;
@@ -401,7 +379,7 @@
       score = 0;
       current = 0;
       userAnswers = [];
-      questions = generateQuestions(10); // Adjust total questions here
+      questions = generateQuestions(15);
       document.getElementById("score").innerText = "0";
       document.getElementById("quiz-section").style.display = "block";
       document.getElementById("end-screen").style.display = "none";
@@ -465,133 +443,6 @@
     function backToResults() {
       document.getElementById("review-screen").style.display = "none";
       document.getElementById("end-screen").style.display = "block";
-    }
-
-    function toggleTestMode() {
-      testMode = !testMode;
-      const btn = document.getElementById("testModeBtn");
-      
-      if (testMode) {
-        btn.innerText = "🔧 Test Mode: ON";
-        btn.classList.remove("btn-warning");
-        btn.classList.add("btn-success");
-        showAllQuestions();
-      } else {
-        btn.innerText = "🔧 Test Mode: OFF";
-        btn.classList.remove("btn-success");
-        btn.classList.add("btn-warning");
-        exitTestMode();
-      }
-    }
-
-    function showAllQuestions() {
-      document.getElementById("quiz-section").style.display = "none";
-      document.getElementById("end-screen").style.display = "none";
-      document.getElementById("review-screen").style.display = "none";
-      document.getElementById("test-mode-screen").style.display = "block";
-      
-      const testContent = document.getElementById("test-content");
-      testContent.innerHTML = "";
-      
-      let allQuestions = [];
-      
-      // Generate all possible question types for each country
-      countries.forEach(country => {
-        // Flag question
-        allQuestions.push({
-          type: "flag",
-          questionText: "Which country does this flag belong to?",
-          correct: country.name,
-          img: country.flag,
-          country: country.name
-        });
-        
-        // Capital question
-        allQuestions.push({
-          type: "capital",
-          questionText: `What is the capital of ${country.name}?`,
-          correct: country.capital,
-          img: "",
-          country: country.name
-        });
-        
-        // Currency question
-        allQuestions.push({
-          type: "currency",
-          questionText: `What is the currency of ${country.name}?`,
-          correct: country.currency,
-          img: "",
-          country: country.name
-        });
-        
-        // Fun fact question
-        allQuestions.push({
-          type: "funfact",
-          questionText: `Which country: ${country.funfact}?`,
-          correct: country.name,
-          img: "",
-          country: country.name
-        });
-      });
-      
-      // Add landmark questions
-      landmarks.forEach(landmark => {
-        // Landmark country question
-        allQuestions.push({
-          type: "landmarkCountry",
-          questionText: "Which country is this famous landmark in?",
-          correct: landmark.country,
-          img: landmark.img,
-          landmark: landmark.name
-        });
-        
-        // Landmark name question
-        allQuestions.push({
-          type: "landmarkName",
-          questionText: "What is the name of this landmark?",
-          correct: landmark.name,
-          img: landmark.img,
-          landmark: landmark.name
-        });
-      });
-      
-      // Display all questions
-      allQuestions.forEach((q, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.className = 'review-question';
-        
-        const imageStatus = q.img ? 
-          `<img src="${q.img}" class="review-img mb-2" alt="Test image" onerror="this.style.border='3px solid red'; this.alt='❌ IMAGE FAILED TO LOAD';" onload="this.style.border='3px solid green';">
-           <br><small class="text-muted">Image path: ${q.img}</small>` 
-          : '<small class="text-muted">No image for this question</small>';
-        
-        questionDiv.innerHTML = `
-          <div class="row">
-            <div class="col-md-2 text-center">
-              <h6>${q.type.toUpperCase()}</h6>
-              <small>Question ${index + 1}</small>
-            </div>
-            <div class="col-md-10">
-              <h6>${q.questionText}</h6>
-              ${imageStatus}
-              <p class="mt-2"><strong>Correct Answer:</strong> <span class="correct-answer">${q.correct}</span></p>
-              ${q.country ? `<small class="text-muted">Country: ${q.country}</small>` : ''}
-              ${q.landmark ? `<small class="text-muted">Landmark: ${q.landmark}</small>` : ''}
-            </div>
-          </div>
-        `;
-        
-        testContent.appendChild(questionDiv);
-      });
-    }
-
-    function exitTestMode() {
-      testMode = false;
-      document.getElementById("testModeBtn").innerText = "🔧 Test Mode: OFF";
-      document.getElementById("testModeBtn").classList.remove("btn-success");
-      document.getElementById("testModeBtn").classList.add("btn-warning");
-      document.getElementById("test-mode-screen").style.display = "none";
-      document.getElementById("quiz-section").style.display = "block";
     }
 
     window.onload = restartQuiz;

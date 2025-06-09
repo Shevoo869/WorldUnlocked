@@ -55,57 +55,32 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
     }
 
-    /* Continent-specific backgrounds */
-    #africa {
-      background-image: url('Images/africa-culture.jpg');
-    }
+    /* correct the relative path */
+#africa {
+  background-image: url('Images/africa-culture.jpg');
+  background-size: cover;           /* fill the container */
+  background-position: center;      /* center the image */
+  background-attachment: fixed;     /* “lock” the background during scroll */
+}
+/* repeat for the others… */
+#asia {
+  background: url('Images/asia-culture.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+#europe {
+  background: url('Images/europe-culture.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+#americas {
+  background: url('Images/americas-culture.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+#oceania {
+  background: url('Images/oceania-culture.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 
-    #asia {
-      background-image: url('Images/asia-culture.jpg');
-    }
-
-    #europe {
-      background-image: url('Images/europe-culture.jpg');
-    }
-
-    #americas {
-      background-image: url('Images/americas-culture.jpg');
-    }
-
-    #oceania {
-      background-image: url('Images/oceania-culture.jpg');
-    }
-
-    /* Fallback gradients if images don't load */
-    #africa {
-      background-image: 
-        linear-gradient(135deg, #ff6b35, #f7931e),
-        url('Images/africa-culture.jpg');
-    }
-
-    #asia {
-      background-image: 
-        linear-gradient(135deg, #667eea, #764ba2),
-        url('Images/asia-culture.jpg');
-    }
-
-    #europe {
-      background-image: 
-        linear-gradient(135deg, #f093fb, #f5576c),
-        url('Images/europe-culture.jpg');
-    }
-
-    #americas {
-      background-image: 
-        linear-gradient(135deg, #4facfe, #00f2fe),
-        url('Images/americas-culture.jpg');
-    }
-
-    #oceania {
-      background-image: 
-        linear-gradient(135deg, #43e97b, #38f9d7),
-        url('Images/oceania-culture.jpg');
-    }
+   
   </style>
 </head>
 
@@ -144,7 +119,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/za.png" class="card-img-top" alt="South Africa">
               <div class="card-body text-center">
-                <h5 class="card-title">South Africa</h5>
+                <h5 class="card-title text-dark">South Africa</h5>
                 <a href="country-South Africa.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -163,7 +138,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/jp.png" class="card-img-top" alt="Japan Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">Japan</h5>
+                <h5 class="card-title text-dark">Japan</h5>
                 <a href="country-Japan.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -182,7 +157,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/fr.png" class="card-img-top" alt="France Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">France</h5>
+                <h5 class="card-title text-dark">France</h5>
                 <a href="country-France.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -201,7 +176,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/us.png" class="card-img-top" alt="USA Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">United States</h5>
+                <h5 class="card-title text-dark">United States</h5>
                 <a href="country-United States.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -210,7 +185,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/br.png" class="card-img-top" alt="Brazil Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">Brazil</h5>
+                <h5 class="card-title text-dark">Brazil</h5>
                 <a href="country-Brazil.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -229,7 +204,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/au.png" class="card-img-top" alt="Australia Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">Australia</h5>
+                <h5 class="card-title text-dark">Australia</h5>
                 <a href="country-Australia.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
@@ -238,7 +213,7 @@
             <div class="card">
               <img src="https://flagcdn.com/w320/nz.png" class="card-img-top" alt="New Zealand Flag">
               <div class="card-body text-center">
-                <h5 class="card-title">New Zealand</h5>
+                <h5 class="card-title text-dark">New Zealand</h5>
                 <a href="country-New Zealand.html" class="btn btn-sm btn-primary">Explore</a>
               </div>
             </div>
